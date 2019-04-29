@@ -7,6 +7,7 @@ public class Field {
     private int countOfBombs;
     private FieldAddres fieldAddres;
 
+
     public Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres) {
         this.isBomb = isBomb;
         this.isMarked = isMarked;

@@ -9,6 +9,7 @@ public class FieldAddres {
         this.y = y;
     }
 
+
     public int getX() {
         return x;
     }

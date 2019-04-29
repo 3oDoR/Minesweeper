@@ -12,6 +12,7 @@ public class DescController {
     private int marked;
     private ArrayList<FieldAddres> modifiedFields;
 
+
     public DescController(Desk desk) {
         this.desk = desk;
         this.unHidden = 0;
