@@ -4,6 +4,7 @@ import model.Desk;
 import model.Field;
 import model.FieldAddres;
 
+
 import java.util.ArrayList;
 
 public class DescController {
@@ -12,15 +13,18 @@ public class DescController {
     private int marked;
     private ArrayList<FieldAddres> modifiedFields;
 
-
     public DescController(Desk desk) {
         this.desk = desk;
         this.unHidden = 0;
-        modifiedFields = new ArrayList<FieldAddres>();
+        modifiedFields = new ArrayList<>();
     }
 
     public void setMarked (final int x, final int y) {
         desk.getField(x, y).setMarked(true);
+
+        desk.getField(x, y).setText("B");
+
+        desk.getField(x, y).updateUI();
 
         marked++;
     }
@@ -28,15 +32,23 @@ public class DescController {
     public void setUnmarked (final int x, final int y) {
         desk.getField(x, y).setMarked(false);
 
+        desk.getField(x, y).setText("");
+
+        desk.getField(x, y).updateUI();
+
         marked--;
     }
 
-    public void remarked (final int x, final int y) {
-        if (desk.getField(x, y).isMarked()) {
+    public GameResult remarked (final int x, final int y) {
+        Field field = desk.getField(x, y);
+
+        if (field.isMarked()) {
             setUnmarked(x, y);
         } else {
             setMarked(x, y);
         }
+
+        return game(field);
     }
 
     public void openFreeSpace (final int x, final int y) {
@@ -44,6 +56,8 @@ public class DescController {
 
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
+
+            field.setText(String.valueOf(field.getCountOfBombs()));
 
             modifiedFields.add(new FieldAddres(x, y));
 
@@ -69,11 +83,8 @@ public class DescController {
         return game(field);
     }
 
-
-
-
     private GameResult game (final Field field) {
-        if (field.isBomb()) {
+        if (field.isBomb() && !field.isMarked()) {
             return GameResult.LOSE;
         }
 
@@ -102,7 +113,7 @@ public class DescController {
         private ArrayList<FieldAddres> modifiedFields;
 
         GameResult() {
-            this.modifiedFields = new ArrayList<FieldAddres>();
+            this.modifiedFields = new ArrayList<>();
         }
 
         private void addAddres (FieldAddres fieldAddres) {
@@ -112,5 +123,9 @@ public class DescController {
         public ArrayList<FieldAddres> getModifiedFields() {
             return modifiedFields;
         }
+    }
+
+    public Field[][] getFields () {
+        return desk.getFields();
     }
 }

@@ -1,12 +1,13 @@
 package model;
 
-public class Field {
+import javax.swing.*;
+
+public class Field extends JButton {
     private boolean isBomb;
     private boolean isMarked;
     private boolean isHidden;
     private int countOfBombs;
     private FieldAddres fieldAddres;
-
 
     public Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres) {
         this.isBomb = isBomb;

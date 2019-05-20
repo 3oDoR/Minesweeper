@@ -17,12 +17,4 @@ public class FieldAddres {
     public int getY() {
         return y;
     }
-
-    @Override
-    public String toString() {
-        return "model.FieldAddres{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }
