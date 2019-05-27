@@ -1,8 +1,12 @@
 package model;
 
+import Hex.Hexagon;
+import Hex.HexagonPanel;
+
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Desk {
+public class Desk extends HexagonPanel {
     private int lines;
     private int columns;
     private Field[][] fields;
@@ -14,6 +18,8 @@ public class Desk {
         this.fields = new Field[lines][columns];
 
         init();
+
+
     }
 
     private void init () {
@@ -21,7 +27,11 @@ public class Desk {
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-                fields[i][j] = new Field(needBomb(), false, true, 0, new FieldAddres(j, i));
+                fields[i][j] = new Field(needBomb(),
+                        false, true,
+                        0, new FieldAddres(j, i),
+                        new HexagonPanel(new Hexagon(new Point(25,25),24)));
+
             }
         }
 
@@ -30,15 +40,19 @@ public class Desk {
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
                 for (FieldAddres fieldAddres: getNeighbords(j, i)) {
-                    if (getField(fieldAddres).isBomb()) {
-                        count++;
+                    if (fieldAddres != null) {
+                        if (getField(fieldAddres).isBomb()) {
+                            count++;
+                        }
                     }
+
+
                 }
-
-                fields[i][j].setCountOfBombs(count);
-
-                count = 0;
+                if ( fields[i][j] != null) {
+                    fields[i][j].setCountOfBombs(count);
+                }
             }
+            count = 0;
         }
     }
 
@@ -53,7 +67,7 @@ public class Desk {
     }
 
     public FieldAddres[] getNeighbords (final int x, final int y) {
-        if (y >= lines && x >= columns && y < 0 && x < 0) {
+        if (y >= lines && x >= columns && y < 0 && x < 0 || fields[x][y] == null) {
             return new FieldAddres[0];
         }
 
@@ -126,4 +140,6 @@ public class Desk {
     public Field[][] getFields () {
         return fields;
     }
+
+
 }

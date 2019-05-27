@@ -1,20 +1,24 @@
 package model;
 
-import javax.swing.*;
 
-public class Field extends JButton {
+import Hex.HexagonPanel;
+
+public class Field extends HexagonPanel {
     private boolean isBomb;
     private boolean isMarked;
     private boolean isHidden;
     private int countOfBombs;
     private FieldAddres fieldAddres;
+    private HexagonPanel hexagonPanel;
 
-    public Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres) {
+    public Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres, HexagonPanel hexagonPanel) {
         this.isBomb = isBomb;
         this.isMarked = isMarked;
         this.isHidden = isHidden;
         this.countOfBombs = countOfBombs;
         this.fieldAddres = fieldAddres;
+        this.hexagonPanel = hexagonPanel;
+
     }
 
     public boolean isBomb() {
@@ -56,4 +60,13 @@ public class Field extends JButton {
     public void setFieldAddres(FieldAddres fieldAddres) {
         this.fieldAddres = fieldAddres;
     }
+
+    public HexagonPanel getHexagonPanel() {
+        return hexagonPanel;
+    }
+
+    public void setHexagonPanel(HexagonPanel hexagonPanel) {
+        this.hexagonPanel = hexagonPanel;
+    }
+
 }

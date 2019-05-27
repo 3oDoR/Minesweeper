@@ -2,6 +2,8 @@ package view;
 
 import controller.DescController;
 import controller.Game;
+import javafx.scene.Group;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -38,6 +40,7 @@ public class MinerMouseListener implements MouseListener{
             result = controller.remarked(x, y);
         } else if (e.getButton() == MouseEvent.BUTTON1) {
             result = controller.touch(x, y);
+
         }
 
 
@@ -53,7 +56,6 @@ public class MinerMouseListener implements MouseListener{
         if (option == 0) {
             frame.setVisible(false);
             frame.setEnabled(false);
-
             new Game(Game.getSizeOfLine()).run();
 
         } else if (option == 1) {

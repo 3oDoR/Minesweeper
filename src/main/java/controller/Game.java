@@ -1,5 +1,6 @@
 package controller;
 
+import Hex.HexagonPanel;
 import model.Desk;
 import model.Field;
 import view.MinerMouseListener;
@@ -11,6 +12,7 @@ public class Game {
     private int lines;
     private int columns;
 
+
     public Game(int size) {
         this.lines = size;
         this.columns = size;
@@ -18,6 +20,7 @@ public class Game {
 
     public static void main(String[] args) {
         new Game(getSizeOfLine()).run();
+
     }
 
     public static void repaint(Field[][] fields) {
@@ -43,29 +46,41 @@ public class Game {
 
         JPanel panel = new JPanel();
 
-        GridLayout gridLayout = new GridLayout(lines, columns);
-
-        panel.setLayout(gridLayout);
+//        GridLayout gridLayout = new GridLayout(lines, columns);
+//
+//        panel.setLayout(gridLayout);
 
         Desk desk = new Desk(lines, columns);
 
         DescController controller = new DescController(desk);
 
-        JButton button;
+        HexagonPanel button;
+
+
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-                button = desk.getField(i, j);
+                    button = desk.getField(i, j).getHexagonPanel();
 
-                button.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
+                    button.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
 
-                panel.add(button);
+
+
+                    panel.add(button);
+
+
             }
         }
+
+//        panel.setBackground(new Color(100,143,110));
+
 
         topLevelContainer.add(panel);
 
         topLevelContainer.setVisible(true);
+
     }
+
+
 }
 
 
