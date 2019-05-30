@@ -1,9 +1,11 @@
 package controller;
 
 
+import Hex.HexagonPanel;
 import model.Desk;
 import model.Field;
 import model.FieldAddres;
+
 
 
 import java.util.ArrayList;
@@ -25,8 +27,10 @@ public class DescController {
     public void setMarked(final int x, final int y) {
 
         desk.getField(x, y).setMarked(true);
+
         // desk.getField(x, y).setText("B");
-        desk.getField(x, y).updateUI();
+
+//        desk.getField(x, y).getHexagonPanel().updateUI();
 
         marked++;
     }
@@ -35,7 +39,7 @@ public class DescController {
 
         desk.getField(x, y).setMarked(false);
 //      desk.getField(x, y).setText("");
-        desk.getField(x, y).updateUI();
+//        desk.getField(x, y).getHexagonPanel().updateUI();
 
         marked--;
     }
@@ -58,6 +62,7 @@ public class DescController {
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
 //          field.setText(String.valueOf(field.getCountOfBombs()));
+
             modifiedFields.add(new FieldAddres(x, y));
 
             unHidden++;

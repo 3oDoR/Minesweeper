@@ -2,8 +2,6 @@ package view;
 
 import controller.DescController;
 import controller.Game;
-import javafx.scene.Group;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -62,7 +60,7 @@ public class MinerMouseListener implements MouseListener{
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         }
 
-        Game.repaint(controller.getFields());
+//        Game.repaint(controller.getFields());
     }
 
     @Override

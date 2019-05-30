@@ -1,12 +1,15 @@
 package controller;
 
+import Hex.Hexagon;
 import Hex.HexagonPanel;
 import model.Desk;
-import model.Field;
 import view.MinerMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Game {
     private int lines;
@@ -23,12 +26,8 @@ public class Game {
 
     }
 
-    public static void repaint(Field[][] fields) {
-        for (int i = 0; i < fields.length; i++) {
-            for (int j = 0; j < fields[i].length; j++) {
-                fields[i][j].updateUI();
-            }
-        }
+    public static void repaint(HexagonPanel hexagonPanel) {
+        hexagonPanel.updateUI();
     }
 
     public static int getSizeOfLine() {
@@ -42,37 +41,37 @@ public class Game {
 
         topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        topLevelContainer.setSize(new Dimension(400, 400));
+        topLevelContainer.setSize(new Dimension(600, 600));
 
         JPanel panel = new JPanel();
-
-//        GridLayout gridLayout = new GridLayout(lines, columns);
-//
-//        panel.setLayout(gridLayout);
 
         Desk desk = new Desk(lines, columns);
 
         DescController controller = new DescController(desk);
 
-        HexagonPanel button;
+        ArrayList<Hexagon> list = new ArrayList<>();
 
+        for (int i = 0;i < lines;i++) {
+            for (int j = 0;j < columns;j++) {
 
-        for (int i = 0; i < lines; i++) {
-            for (int j = 0; j < columns; j++) {
-                    button = desk.getField(i, j).getHexagonPanel();
-
-                    button.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
-
-
-
-                    panel.add(button);
-
+                list.add(desk.getField(i,j).getHexagon());
 
             }
+
+
         }
 
-//        panel.setBackground(new Color(100,143,110));
+        HexagonPanel button = new HexagonPanel(list);
 
+//        button.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
+
+        panel.add(button);
+
+
+
+
+
+        panel.setBackground(new Color(100,143,110));
 
         topLevelContainer.add(panel);
 

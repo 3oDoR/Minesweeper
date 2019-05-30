@@ -1,29 +1,30 @@
 package Hex;
+
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
- public class HexagonPanel extends JPanel {
+public class HexagonPanel extends JPanel {
 
-    private Hexagon hexagon;
-
-    public HexagonPanel(Hexagon hexagon) {
+    ArrayList<Hexagon> hexagon;
+    public HexagonPanel(ArrayList<Hexagon> hexagon) {
         this.hexagon = hexagon;
-        this.setPreferredSize(new Dimension(49, 49));
+        this.setPreferredSize(new Dimension(800, 800));
+
     }
 
-    public HexagonPanel() {
-    }
+
 
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-            g.setColor(Color.BLACK);
-            g.drawPolygon(hexagon.getHexagon());
-
-
-
+            for (Hexagon hex: hexagon) {
+                g.setColor(Color.BLACK);
+                g.drawPolygon(hex);
+        }
 
     }
 }

@@ -6,7 +6,7 @@ import Hex.HexagonPanel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Desk extends HexagonPanel {
+public class Desk {
     private int lines;
     private int columns;
     private Field[][] fields;
@@ -29,8 +29,7 @@ public class Desk extends HexagonPanel {
             for (int j = 0; j < columns; j++) {
                 fields[i][j] = new Field(needBomb(),
                         false, true,
-                        0, new FieldAddres(j, i),
-                        new HexagonPanel(new Hexagon(new Point(25,25),24)));
+                        0, new FieldAddres(j, i),new Hexagon(new Point(50,50),50));
 
             }
         }
