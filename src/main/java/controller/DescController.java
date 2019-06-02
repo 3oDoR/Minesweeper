@@ -1,7 +1,6 @@
 package controller;
 
 
-import Hex.HexagonPanel;
 import model.Desk;
 import model.Field;
 import model.FieldAddres;
@@ -101,7 +100,7 @@ public class DescController {
                 result.addAddres(fieldAddres);
             }
 
-            modifiedFields.clear();
+           modifiedFields.clear();
 
             return GameResult.NONE;
         }

@@ -1,5 +1,6 @@
 package view;
 
+
 import controller.DescController;
 import controller.Game;
 
@@ -8,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 
-public class MinerMouseListener implements MouseListener{
+public class MinerMouseListener  implements MouseListener {
     private int x;
     private int y;
     private final DescController controller;
@@ -54,6 +55,8 @@ public class MinerMouseListener implements MouseListener{
         if (option == 0) {
             frame.setVisible(false);
             frame.setEnabled(false);
+
+
             new Game(Game.getSizeOfLine()).run();
 
         } else if (option == 1) {

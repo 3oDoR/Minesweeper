@@ -1,11 +1,14 @@
 package Hex;
 
+
+import javax.swing.*;
 import java.awt.*;
 
-public class Hexagon extends Polygon{
-    private final int radius;
 
-    private final Point center;
+public class Hexagon extends JPanel {
+    public final int radius;
+
+    public final Point center;
 
     private final Polygon hexagon;
 
@@ -46,4 +49,7 @@ public class Hexagon extends Polygon{
     public Polygon getHexagon() {
         return hexagon;
     }
+
+
+
 }

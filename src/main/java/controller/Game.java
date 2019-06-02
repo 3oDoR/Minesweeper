@@ -8,8 +8,6 @@ import view.MinerMouseListener;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Game {
     private int lines;
@@ -38,48 +36,31 @@ public class Game {
 
     public final void run() {
         JFrame topLevelContainer = new JFrame("Miner 1.0");
-
         topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        topLevelContainer.setSize(new Dimension(600, 600));
-
+        topLevelContainer.setSize(new Dimension(800, 800));
         JPanel panel = new JPanel();
-
         Desk desk = new Desk(lines, columns);
-
         DescController controller = new DescController(desk);
-
         ArrayList<Hexagon> list = new ArrayList<>();
+        Hexagon listener;
 
-        for (int i = 0;i < lines;i++) {
-            for (int j = 0;j < columns;j++) {
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < columns; j++) {
 
-                list.add(desk.getField(i,j).getHexagon());
+                listener = new Hexagon(desk.getField(i,j).getHexagon().getCenter(),26);
+                list.add(desk.getField(i, j).getHexagon());
+                listener.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
+                panel.add(listener);
 
             }
-
-
         }
 
         HexagonPanel button = new HexagonPanel(list);
-
-//        button.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
-
         panel.add(button);
-
-
-
-
-
-        panel.setBackground(new Color(100,143,110));
-
+        panel.setBackground(new Color(100, 143, 110));
         topLevelContainer.add(panel);
-
         topLevelContainer.setVisible(true);
-
     }
-
-
 }
 
 

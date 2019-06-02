@@ -2,7 +2,6 @@ package model;
 
 
 import Hex.Hexagon;
-import Hex.HexagonPanel;
 
 public class Field {
     private boolean isBomb;
@@ -12,7 +11,7 @@ public class Field {
     private FieldAddres fieldAddres;
     private Hexagon hexagon;
 
-    public Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres,Hexagon hexagon) {
+    Field(boolean isBomb, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres, Hexagon hexagon) {
         this.isBomb = isBomb;
         this.isMarked = isMarked;
         this.isHidden = isHidden;
@@ -20,14 +19,12 @@ public class Field {
         this.fieldAddres = fieldAddres;
         this.hexagon = hexagon;
 
+
+
     }
 
     public boolean isBomb() {
         return isBomb;
-    }
-
-    public void setBomb(boolean bomb) {
-        isBomb = bomb;
     }
 
     public boolean isMarked() {
@@ -50,7 +47,7 @@ public class Field {
         return countOfBombs;
     }
 
-    public void setCountOfBombs(int countOfBombs) {
+    void setCountOfBombs(int countOfBombs) {
         this.countOfBombs = countOfBombs;
     }
 
@@ -58,16 +55,8 @@ public class Field {
         return fieldAddres;
     }
 
-    public void setFieldAddres(FieldAddres fieldAddres) {
-        this.fieldAddres = fieldAddres;
-    }
-
     public Hexagon getHexagon() {
         return hexagon;
-    }
-
-    public void setHexagon(Hexagon hexagon) {
-        this.hexagon = hexagon;
     }
 
 }
