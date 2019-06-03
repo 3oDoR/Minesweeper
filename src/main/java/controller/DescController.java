@@ -7,34 +7,28 @@ import model.FieldAddres;
 
 
 
-import java.util.ArrayList;
-
 public class DescController {
     private Desk desk;
     private int unHidden;
     private int marked;
-    private ArrayList<FieldAddres> modifiedFields;
 
 
-    public DescController(Desk desk) {
+    DescController(Desk desk) {
         this.desk = desk;
         this.unHidden = 0;
-        modifiedFields = new ArrayList<>();
     }
 
 
-    public void setMarked(final int x, final int y) {
+    private void setMarked(final int x, final int y) {
 
         desk.getField(x, y).setMarked(true);
-
-        // desk.getField(x, y).setText("B");
-
-//        desk.getField(x, y).getHexagonPanel().updateUI();
+        //        desk.getField(x, y).setText("B");
+        //        desk.getField(x, y).getHexagonPanel().updateUI();
 
         marked++;
     }
 
-    public void setUnmarked(final int x, final int y) {
+    private void setUnmarked(final int x, final int y) {
 
         desk.getField(x, y).setMarked(false);
 //      desk.getField(x, y).setText("");
@@ -55,14 +49,12 @@ public class DescController {
     }
 
 
-    public void openFreeSpace(final int x, final int y) {
+    private void openFreeSpace(final int x, final int y) {
         Field field = desk.getField(x, y);
 
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
 //          field.setText(String.valueOf(field.getCountOfBombs()));
-
-            modifiedFields.add(new FieldAddres(x, y));
 
             unHidden++;
 
@@ -77,6 +69,7 @@ public class DescController {
     }
 
     public GameResult touch(final int x, final int y) {
+
         if (x >= desk.getColumns() && x < 0 && y < 0 && y >= desk.getLines()) {
             throw new IllegalArgumentException();
         }
@@ -94,13 +87,6 @@ public class DescController {
         }
 
         if (unHidden + marked < desk.getCountOfElements()) {
-            GameResult result = GameResult.NONE;
-
-            for (FieldAddres fieldAddres : modifiedFields) {
-                result.addAddres(fieldAddres);
-            }
-
-           modifiedFields.clear();
 
             return GameResult.NONE;
         }
@@ -113,24 +99,7 @@ public class DescController {
     }
 
     public enum GameResult {
-        WIN, LOSE, NONE;
+        WIN, LOSE, NONE
 
-        private ArrayList<FieldAddres> modifiedFields;
-
-        GameResult() {
-            this.modifiedFields = new ArrayList<>();
-        }
-
-        private void addAddres(FieldAddres fieldAddres) {
-            modifiedFields.add(fieldAddres);
-        }
-
-        public ArrayList<FieldAddres> getModifiedFields() {
-            return modifiedFields;
-        }
-    }
-
-    public Field[][] getFields() {
-        return desk.getFields();
     }
 }

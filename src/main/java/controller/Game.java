@@ -47,7 +47,7 @@ public class Game {
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
 
-                listener = new Hexagon(desk.getField(i,j).getHexagon().getCenter(),26);
+                listener = desk.getField(i, j).getHexagon();
                 list.add(desk.getField(i, j).getHexagon());
                 listener.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
                 panel.add(listener);
