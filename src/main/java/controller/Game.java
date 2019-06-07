@@ -14,6 +14,7 @@ public class Game {
     private int columns;
 
 
+
     public Game(int size) {
         this.lines = size;
         this.columns = size;

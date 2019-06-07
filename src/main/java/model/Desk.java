@@ -1,8 +1,6 @@
 package model;
 
 import Hex.Hexagon;
-import Hex.HexagonPanel;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -79,7 +77,7 @@ public class Desk {
         return bombIsNeeding;
     }
 
-    public FieldAddres[] getNeighbords (final int x, final int y) {
+    private FieldAddres[] getNeighbords(final int x, final int y) {
         if (y >= lines && x >= columns && y < 0 && x < 0 || fields[x][y] == null) {
             return new FieldAddres[0];
         }

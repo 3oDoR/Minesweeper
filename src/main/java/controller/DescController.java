@@ -1,27 +1,45 @@
 package controller;
 
 
+import Hex.Hexagon;
 import model.Desk;
 import model.Field;
 import model.FieldAddres;
-
+import java.awt.*;
+import java.util.ArrayList;
 
 
 public class DescController {
     private Desk desk;
     private int unHidden;
     private int marked;
+    private ArrayList<FieldAddres> modifiedFields;
 
 
     DescController(Desk desk) {
         this.desk = desk;
         this.unHidden = 0;
+        modifiedFields = new ArrayList<>();
+    }
+
+
+    private void paintHex(Graphics g, Hexagon hex) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(5));
+        g2d.setColor(Color.WHITE);
+        g2d.fillPolygon(hex.getHexagon());
+        g2d.setColor(Color.BLACK);
+        g2d.drawPolygon(hex.getHexagon());
     }
 
 
     private void setMarked(final int x, final int y) {
 
+
         desk.getField(x, y).setMarked(true);
+        desk.getField(x, y).getHexagon().updateUI();
+
+
         //        desk.getField(x, y).setText("B");
         //        desk.getField(x, y).getHexagonPanel().updateUI();
 
@@ -31,6 +49,7 @@ public class DescController {
     private void setUnmarked(final int x, final int y) {
 
         desk.getField(x, y).setMarked(false);
+        desk.getField(x, y).getHexagon().repaint();
 //      desk.getField(x, y).setText("");
 //        desk.getField(x, y).getHexagonPanel().updateUI();
 
@@ -56,10 +75,11 @@ public class DescController {
             field.setHidden(false);
 //          field.setText(String.valueOf(field.getCountOfBombs()));
 
+            modifiedFields.add(new FieldAddres(x, y));
+
             unHidden++;
 
             for (FieldAddres fieldAddres : desk.getNeighbords(field.getFieldAddres())) {
-
                 if (desk.getField(fieldAddres).getCountOfBombs() == 0) {
                     openFreeSpace(fieldAddres.getX(), fieldAddres.getY());
                 }
@@ -69,7 +89,6 @@ public class DescController {
     }
 
     public GameResult touch(final int x, final int y) {
-
         if (x >= desk.getColumns() && x < 0 && y < 0 && y >= desk.getLines()) {
             throw new IllegalArgumentException();
         }
@@ -87,8 +106,15 @@ public class DescController {
         }
 
         if (unHidden + marked < desk.getCountOfElements()) {
+            GameResult result = GameResult.NONE;
+            for (FieldAddres fieldAddres: modifiedFields) {
+                result.addAddres(fieldAddres);
+            }
+            modifiedFields.clear();
 
             return GameResult.NONE;
+
+
         }
 
         if (marked == desk.getCountOfBombs() && marked + unHidden == desk.getCountOfElements()) {
@@ -99,7 +125,24 @@ public class DescController {
     }
 
     public enum GameResult {
-        WIN, LOSE, NONE
+        WIN, LOSE, NONE;
 
+        private ArrayList<FieldAddres> modifiedFields;
+
+        GameResult() {
+            this.modifiedFields = new ArrayList<>();
+        }
+
+        private void addAddres (FieldAddres fieldAddres) {
+            modifiedFields.add(fieldAddres);
+        }
+
+        public ArrayList<FieldAddres> getModifiedFields() {
+            return modifiedFields;
+        }
+    }
+
+    public Field[][] getFields () {
+        return desk.getFields();
     }
 }

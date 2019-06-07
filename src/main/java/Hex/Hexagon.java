@@ -37,7 +37,6 @@ public class Hexagon extends JPanel {
         return polygon;
     }
 
-
     public int getRadius() {
         return radius;
     }

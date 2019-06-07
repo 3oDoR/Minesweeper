@@ -38,8 +38,4 @@ public class HexagonPanel extends JPanel {
 
         }
     }
-
-    public ArrayList<Hexagon> getHexagon() {
-        return hexagon;
-    }
 }
