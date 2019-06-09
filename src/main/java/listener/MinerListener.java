@@ -18,6 +18,7 @@ public class MinerListener implements MouseListener {
     private final JFrame jFrame;
     Desk desk;
 
+
     private static final String[] OPTIONS = new String[]{"Yes", "No"};
     private static final String LOSE_MESSAGE = "Sorry, you are looser =(";
     private static final String WIN_MESSAGE = "Congratulations! You are winner!";
