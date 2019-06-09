@@ -1,9 +1,9 @@
 package controller;
 
-import Hex.Hexagon;
-import Hex.HexagonPanel;
+import hexagon.Hexagon;
+import hexagon.HexagonPanel;
+import listener.MinerListener;
 import model.Desk;
-import view.MinerMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Game {
     private int lines;
     private int columns;
-
 
 
     public Game(int size) {
@@ -25,8 +24,12 @@ public class Game {
 
     }
 
+
     public static void repaint(HexagonPanel hexagonPanel) {
-        hexagonPanel.updateUI();
+
+        hexagonPanel.repaint();
+
+
     }
 
     public static int getSizeOfLine() {
@@ -41,23 +44,21 @@ public class Game {
         topLevelContainer.setSize(new Dimension(800, 800));
         JPanel panel = new JPanel();
         Desk desk = new Desk(lines, columns);
+        ArrayList<Hexagon> hexagons = new ArrayList<>();
         DescController controller = new DescController(desk);
-        ArrayList<Hexagon> list = new ArrayList<>();
-        Hexagon listener;
+
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-
-                listener = desk.getField(i, j).getHexagon();
-                list.add(desk.getField(i, j).getHexagon());
-                listener.addMouseListener(new MinerMouseListener(i, j, controller, topLevelContainer));
-                panel.add(listener);
-
+                hexagons.add(desk.getField(i, j).getHexagon());
             }
         }
 
-        HexagonPanel button = new HexagonPanel(list);
-        panel.add(button);
+        HexagonPanel hexagonPanel = new HexagonPanel(hexagons);
+
+        hexagonPanel.addMouseListener(new MinerListener(controller,topLevelContainer,hexagonPanel,desk));
+
+        panel.add(hexagonPanel);
         panel.setBackground(new Color(100, 143, 110));
         topLevelContainer.add(panel);
         topLevelContainer.setVisible(true);

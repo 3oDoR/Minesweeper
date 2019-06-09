@@ -1,6 +1,4 @@
-package Hex;
-
-
+package hexagon;
 
 
 import javax.swing.*;
@@ -25,17 +23,16 @@ public class HexagonPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(5));
 
-                for (Hexagon hex : hexagon) {
-                    for (int i = 0; i < hexagon.size(); i++) {
-                        for (int j = 0; j < hexagon.size(); j++) {
-                    g2d.setColor(Color.GRAY);
-                    g2d.fillPolygon(hex.getHexagon());
-                    g2d.setColor(Color.BLACK);
-                    g2d.drawPolygon(hex.getHexagon());
-                }
-            }
-
-
+        for (Hexagon hex : hexagon) {
+            g2d.setColor(Color.GRAY);
+            g2d.fillPolygon(hex.getHexagon());
+            g2d.setColor(Color.BLACK);
+            g2d.drawPolygon(hex.getHexagon());
         }
+    }
+
+
+    public ArrayList<Hexagon> getHexagon() {
+        return hexagon;
     }
 }

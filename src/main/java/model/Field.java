@@ -1,7 +1,7 @@
 package model;
 
 
-import Hex.Hexagon;
+import hexagon.Hexagon;
 
 public class Field {
     private boolean isBomb;
@@ -18,7 +18,6 @@ public class Field {
         this.countOfBombs = countOfBombs;
         this.fieldAddres = fieldAddres;
         this.hexagon = hexagon;
-
 
 
     }

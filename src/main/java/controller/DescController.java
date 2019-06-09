@@ -1,10 +1,11 @@
 package controller;
 
 
-import Hex.Hexagon;
+import hexagon.Hexagon;
 import model.Desk;
 import model.Field;
 import model.FieldAddres;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -23,6 +24,8 @@ public class DescController {
     }
 
 
+
+
     private void paintHex(Graphics g, Hexagon hex) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(5));
@@ -35,13 +38,7 @@ public class DescController {
 
     private void setMarked(final int x, final int y) {
 
-
         desk.getField(x, y).setMarked(true);
-        desk.getField(x, y).getHexagon().updateUI();
-
-
-        //        desk.getField(x, y).setText("B");
-        //        desk.getField(x, y).getHexagonPanel().updateUI();
 
         marked++;
     }
@@ -49,9 +46,6 @@ public class DescController {
     private void setUnmarked(final int x, final int y) {
 
         desk.getField(x, y).setMarked(false);
-        desk.getField(x, y).getHexagon().repaint();
-//      desk.getField(x, y).setText("");
-//        desk.getField(x, y).getHexagonPanel().updateUI();
 
         marked--;
     }
@@ -73,7 +67,6 @@ public class DescController {
 
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
-//          field.setText(String.valueOf(field.getCountOfBombs()));
 
             modifiedFields.add(new FieldAddres(x, y));
 
@@ -107,7 +100,7 @@ public class DescController {
 
         if (unHidden + marked < desk.getCountOfElements()) {
             GameResult result = GameResult.NONE;
-            for (FieldAddres fieldAddres: modifiedFields) {
+            for (FieldAddres fieldAddres : modifiedFields) {
                 result.addAddres(fieldAddres);
             }
             modifiedFields.clear();
@@ -133,7 +126,7 @@ public class DescController {
             this.modifiedFields = new ArrayList<>();
         }
 
-        private void addAddres (FieldAddres fieldAddres) {
+        private void addAddres(FieldAddres fieldAddres) {
             modifiedFields.add(fieldAddres);
         }
 
@@ -142,7 +135,7 @@ public class DescController {
         }
     }
 
-    public Field[][] getFields () {
+    public Field[][] getFields() {
         return desk.getFields();
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
-import Hex.Hexagon;
+import hexagon.Hexagon;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,54 +21,48 @@ public class Desk {
 
     }
 
-    private void init () {
+    private void init() {
         countOfBombs = 0;
         int x = 100;
         int y = 100;
         int e = 0;
 
 
-            for (int i = 0; i < lines; i++) {
-                for (int j = 0; j < columns; j++) {
-                    x = x + 46;
-                    fields[i][j] = new Field(needBomb(), false, true,
-                            0, new FieldAddres(j, i), new Hexagon(new Point(y, x), 26));
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < columns; j++) {
+                x = x + 46;
+                fields[i][j] = new Field(needBomb(), false, true,
+                        0, new FieldAddres(j, i), new Hexagon(new Point(y, x), 26));
 
-                    if (i % 2 == 0 && e == i && j == lines - 1) {
-                        e+= 1;
-                        x = 122;
-                        y+= 39;
-                    } else if (i % 2 != 0 && e == i && j == lines - 1) {
-                        e+= 1;
-                        x = 100;
-                        y+= 39;
-                    }
+                if (i % 2 == 0 && e == i && j == lines - 1) {
+                    e += 1;
+                    x = 122;
+                    y += 39;
+                } else if (i % 2 != 0 && e == i && j == lines - 1) {
+                    e += 1;
+                    x = 100;
+                    y += 39;
                 }
             }
+        }
 
         int count = 0;
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-                for (FieldAddres fieldAddres: getNeighbords(j, i)) {
-                    if (fieldAddres != null) {
+                for (FieldAddres fieldAddres : getNeighbords(j, i)) {
                         if (getField(fieldAddres).isBomb()) {
                             count++;
-                        }
                     }
                 }
+                fields[i][j].setCountOfBombs(count);
 
-                if ( fields[i][j] != null) {
-                    fields[i][j].setCountOfBombs(count);
-                }
+                count = 0;
             }
-
-            count = 0;
-
         }
     }
 
-    private boolean needBomb () {
+    private boolean needBomb() {
         boolean bombIsNeeding = Math.random() < 0.15;
 
         if (bombIsNeeding) {
@@ -84,50 +79,55 @@ public class Desk {
 
         ArrayList<FieldAddres> result = new ArrayList<>();
 
-//        if (x - 1 >= 0 && y - 1 >= 0) {
-//            result.add(new FieldAddres(x - 1, y - 1));
-//        }
-
-        if (x >= 0 && y - 1 >= 0) {
-            result.add(new FieldAddres(x, y - 1));
-        }
-
-        if (x + 1 < columns && x + 1 >= 0 && y - 1 >= 0) {
-            result.add(new FieldAddres(x + 1, y - 1));
-        }
-
         if (x - 1 >= 0 && y >= 0) {
-            result.add(new FieldAddres(x -1,y));
+            result.add(new FieldAddres(x - 1, y));
         }
 
-        if (x + 1 >= 0 && y >= 0 && x + 1 < columns) {
+        if (y >= 0 && x + 1 < columns) {
             result.add(new FieldAddres(x + 1, y));
         }
 
-        if (x - 1 >= 0 && y + 1 >= 0 && y +1  < lines) {
-            result.add(new FieldAddres(x - 1, y + 1));
+        if (y - 1 >= 0) {
+            result.add(new FieldAddres(x, y - 1));
         }
 
-        if (x >= 0 && y + 1 >= 0 && y + 1 < lines) {
-            result.add(new FieldAddres(x,y+ 1));
+
+        if (y + 1 >= 0 && y + 1 < lines) {
+            result.add(new FieldAddres(x, y + 1));
         }
 
-//        if (x  + 1 >= 0 && y + 1 >= 0 && y + 1 < lines && x + 1 < columns) {
-//            result.add(new FieldAddres(x  + 1,y + 1));
-//        }
+        if (x % 2 == 0) {
+            if (x - 1 >= 0 && y + 1 >= 0 && y + 1 < lines) {
+                result.add(new FieldAddres(x - 1, y + 1));
+            }
+            if (y + 1 >= 0 && y + 1 < lines && x + 1 < columns) {
+                result.add(new FieldAddres(x + 1, y + 1));
+            }
+        }
 
-            return result.toArray(new FieldAddres[result.size()]);
+        if (x % 2 != 0) {
+            if (x - 1 >= 0 && y - 1 >= 0) {
+                result.add(new FieldAddres(x - 1, y - 1));
+            }
+            if (x + 1 < columns && y - 1 >= 0) {
+                result.add(new FieldAddres(x + 1, y - 1));
+            }
+        }
+
+        return result.toArray(new FieldAddres[result.size()]);
+
     }
 
-    public FieldAddres[] getNeighbords (final FieldAddres fieldAddres) {
+
+    public FieldAddres[] getNeighbords(final FieldAddres fieldAddres) {
         return getNeighbords(fieldAddres.getX(), fieldAddres.getY());
     }
 
-    public Field getField (final int x, final int y) {
+    public Field getField(final int x, final int y) {
         return fields[y][x];
     }
 
-    public Field getField (final FieldAddres fieldAddres) {
+    public Field getField(final FieldAddres fieldAddres) {
         return fields[fieldAddres.getY()][fieldAddres.getX()];
     }
 
@@ -139,17 +139,19 @@ public class Desk {
         return columns;
     }
 
-    public int getCountOfElements () {
+    public int getCountOfElements() {
         return lines * columns;
     }
 
-    public int getCountOfBombs () {
+    public int getCountOfBombs() {
         return countOfBombs;
     }
 
-    public Field[][] getFields () {
+    public Field[][] getFields() {
         return fields;
     }
+
+
 
 
 }

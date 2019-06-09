@@ -1,4 +1,4 @@
-package Hex;
+package hexagon;
 
 
 import javax.swing.*;
@@ -20,18 +20,17 @@ public class Hexagon extends JPanel {
 
     }
 
-    private Polygon createHexagon() {
+    public Polygon createHexagon() {
         Polygon polygon = new Polygon();
 
 
-                for (int i = 0; i < 6; i++) {
-                    int xval = (int) (center.x + radius
-                            * Math.cos(i * 2 * Math.PI / 6D));
-                    int yval = (int) (center.y + radius
-                            * Math.sin(i * 2 * Math.PI / 6D));
-                    polygon.addPoint(xval, yval);
-                }
-
+        for (int i = 0; i < 6; i++) {
+            int xval = (int) (center.x + radius
+                    * Math.cos(i * 2 * Math.PI / 6D));
+            int yval = (int) (center.y + radius
+                    * Math.sin(i * 2 * Math.PI / 6D));
+            polygon.addPoint(xval, yval);
+        }
 
 
         return polygon;
@@ -48,7 +47,4 @@ public class Hexagon extends JPanel {
     public Polygon getHexagon() {
         return hexagon;
     }
-
-
-
 }
