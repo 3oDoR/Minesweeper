@@ -24,17 +24,14 @@ public class Game {
 
     }
 
-
     public static void repaint(HexagonPanel hexagonPanel) {
-
         hexagonPanel.repaint();
-
-
     }
 
     public static int getSizeOfLine() {
         String input = JOptionPane.showInputDialog(null, "Enter a desk size (columns): ");
         return Integer.parseInt(input);
+
     }
 
 
@@ -45,7 +42,8 @@ public class Game {
         JPanel panel = new JPanel();
         Desk desk = new Desk(lines, columns);
         ArrayList<Hexagon> hexagons = new ArrayList<>();
-        DescController controller = new DescController(desk);
+        HexagonPanel hexagonPanel = new HexagonPanel(hexagons,desk);
+        DeskController controller = new DeskController(desk,hexagonPanel);
 
 
         for (int i = 0; i < lines; i++) {
@@ -54,14 +52,29 @@ public class Game {
             }
         }
 
-        HexagonPanel hexagonPanel = new HexagonPanel(hexagons);
+
 
         hexagonPanel.addMouseListener(new MinerListener(controller,topLevelContainer,hexagonPanel,desk));
+
+        topLevelContainer.setLocationRelativeTo(null);
+        topLevelContainer.setLayout(new BorderLayout());
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu commands = new JMenu("Commands");
+        JMenuItem quit = new JMenuItem("Quit");
+        quit.addActionListener(e -> System.exit(0));
+        commands.add(quit);
+        menuBar.add(commands);
+        topLevelContainer.setJMenuBar(menuBar);
+
+
+        topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         panel.add(hexagonPanel);
         panel.setBackground(new Color(100, 143, 110));
         topLevelContainer.add(panel);
         topLevelContainer.setVisible(true);
+
     }
 }
 

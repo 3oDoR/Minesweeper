@@ -1,6 +1,6 @@
 package listener;
 
-import controller.DescController;
+import controller.DeskController;
 import controller.Game;
 import hexagon.Hexagon;
 import hexagon.HexagonPanel;
@@ -13,10 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 
 public class MinerListener implements MouseListener {
-    private final DescController controller;
+    private final DeskController controller;
     private final HexagonPanel hexagonPanel;
     private final JFrame jFrame;
-    Desk desk;
+    private Desk desk;
 
 
     private static final String[] OPTIONS = new String[]{"Yes", "No"};
@@ -24,7 +24,7 @@ public class MinerListener implements MouseListener {
     private static final String WIN_MESSAGE = "Congratulations! You are winner!";
     private static final String CONFIRM_NEW_GAME_MESSAGE = "Do you want a new game?";
 
-    public MinerListener(DescController controller, JFrame jFrame, HexagonPanel hexagonPanel, Desk desk) {
+    public MinerListener(DeskController controller, JFrame jFrame, HexagonPanel hexagonPanel, Desk desk) {
         this.controller = controller;
         this.hexagonPanel = hexagonPanel;
         this.jFrame = jFrame;
@@ -33,9 +33,9 @@ public class MinerListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        DescController.GameResult result = DescController.GameResult.NONE;
+        DeskController.GameResult result = DeskController.GameResult.NONE;
 
-        int x = 0;
+        int x;
         int y = 0;
 
         PointerInfo coordinate = MouseInfo.getPointerInfo();
@@ -51,10 +51,6 @@ public class MinerListener implements MouseListener {
                    for (int i = 0; i < desk.getColumns(); i++) {
                        for (int j = 0; j < desk.getLines(); j++) {
                            if (desk.getField(i,j).getHexagon() == hexagon) {
-                               System.out.println("b3");
-                               System.out.println(j + " " + i);
-                               System.out.println(desk.getField(i,j).getCountOfBombs());
-                               System.out.println(desk.getField(i,j).isBomb());
                                result = controller.remarked(i,j);
                            }
                        }
@@ -64,10 +60,6 @@ public class MinerListener implements MouseListener {
                     for (int i = 0; i < desk.getColumns(); i++) {
                         for (int j = 0; j < desk.getLines(); j++) {
                             if (desk.getField(i,j).getHexagon() == hexagon) {
-                                System.out.println("b1");
-                                System.out.println(j + " " + i);
-                                System.out.println(desk.getField(i,j).getCountOfBombs());
-                                System.out.println(desk.getField(i,j).isBomb());
                                 result = controller.touch(i,j);
                             }
                         }
@@ -78,17 +70,17 @@ public class MinerListener implements MouseListener {
 
         int option = -1;
 
-        if (result.equals(DescController.GameResult.LOSE)) {
+        if (result.equals(DeskController.GameResult.LOSE)) {
+            Game.repaint(hexagonPanel);
             option = showOptionDialog(false);
 
-        } else if (result.equals(DescController.GameResult.WIN)) {
+        } else if (result.equals(DeskController.GameResult.WIN)) {
+            Game.repaint(hexagonPanel);
             option = showOptionDialog(true);
         }
 
         if (option == 0) {
-            jFrame.setVisible(false);
-            jFrame.setEnabled(false);
-
+            jFrame.dispose();
 
             new Game(Game.getSizeOfLine()).run();
 
@@ -96,7 +88,6 @@ public class MinerListener implements MouseListener {
             jFrame.dispatchEvent(new WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING));
         }
 
-      Game.repaint(hexagonPanel);
     }
 
     @Override

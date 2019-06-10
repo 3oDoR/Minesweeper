@@ -1,51 +1,40 @@
 package controller;
 
 
-import hexagon.Hexagon;
+import hexagon.HexagonPanel;
 import model.Desk;
 import model.Field;
 import model.FieldAddres;
 
-import java.awt.*;
-import java.util.ArrayList;
 
-
-public class DescController {
+public class DeskController {
     private Desk desk;
     private int unHidden;
     private int marked;
-    private ArrayList<FieldAddres> modifiedFields;
+    private HexagonPanel hexagonPanel;
 
 
-    DescController(Desk desk) {
+    DeskController(Desk desk, HexagonPanel hexagonPanel) {
         this.desk = desk;
+        this.hexagonPanel = hexagonPanel;
         this.unHidden = 0;
-        modifiedFields = new ArrayList<>();
     }
-
-
-
-
-    private void paintHex(Graphics g, Hexagon hex) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(5));
-        g2d.setColor(Color.WHITE);
-        g2d.fillPolygon(hex.getHexagon());
-        g2d.setColor(Color.BLACK);
-        g2d.drawPolygon(hex.getHexagon());
-    }
-
 
     private void setMarked(final int x, final int y) {
 
-        desk.getField(x, y).setMarked(true);
+        if (desk.getField(x, y).isHidden()) {
+            desk.getField(x, y).setMarked(true);
+        }
 
         marked++;
     }
 
     private void setUnmarked(final int x, final int y) {
 
-        desk.getField(x, y).setMarked(false);
+        if (desk.getField(x, y).isHidden()) {
+            desk.getField(x, y).setMarked(false);
+        }
+
 
         marked--;
     }
@@ -55,8 +44,11 @@ public class DescController {
 
         if (field.isMarked()) {
             setUnmarked(x, y);
+            Game.repaint(hexagonPanel);
+            return GameResult.NONE;
         } else {
             setMarked(x, y);
+            Game.repaint(hexagonPanel);
         }
         return game(field);
     }
@@ -68,8 +60,6 @@ public class DescController {
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
 
-            modifiedFields.add(new FieldAddres(x, y));
-
             unHidden++;
 
             for (FieldAddres fieldAddres : desk.getNeighbords(field.getFieldAddres())) {
@@ -78,8 +68,10 @@ public class DescController {
                 }
 
             }
+            Game.repaint(hexagonPanel);
         }
     }
+
 
     public GameResult touch(final int x, final int y) {
         if (x >= desk.getColumns() && x < 0 && y < 0 && y >= desk.getLines()) {
@@ -89,7 +81,6 @@ public class DescController {
         final Field field = desk.getField(x, y);
 
         openFreeSpace(field.getFieldAddres().getX(), field.getFieldAddres().getY());
-
         return game(field);
     }
 
@@ -99,14 +90,7 @@ public class DescController {
         }
 
         if (unHidden + marked < desk.getCountOfElements()) {
-            GameResult result = GameResult.NONE;
-            for (FieldAddres fieldAddres : modifiedFields) {
-                result.addAddres(fieldAddres);
-            }
-            modifiedFields.clear();
-
             return GameResult.NONE;
-
 
         }
 
@@ -118,24 +102,6 @@ public class DescController {
     }
 
     public enum GameResult {
-        WIN, LOSE, NONE;
-
-        private ArrayList<FieldAddres> modifiedFields;
-
-        GameResult() {
-            this.modifiedFields = new ArrayList<>();
-        }
-
-        private void addAddres(FieldAddres fieldAddres) {
-            modifiedFields.add(fieldAddres);
-        }
-
-        public ArrayList<FieldAddres> getModifiedFields() {
-            return modifiedFields;
-        }
-    }
-
-    public Field[][] getFields() {
-        return desk.getFields();
+        WIN, LOSE, NONE
     }
 }

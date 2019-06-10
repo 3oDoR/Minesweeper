@@ -1,21 +1,20 @@
 package hexagon;
 
 
-import javax.swing.*;
 import java.awt.*;
 
 
-public class Hexagon extends JPanel {
-    public final int radius;
+public class Hexagon {
+    private final int radius;
 
-    public final Point center;
+    private final Point center;
 
-    private final Polygon hexagon;
+    private final Polygon polygon;
 
     public Hexagon(Point center, int radius) {
         this.center = center;
         this.radius = radius;
-        this.hexagon = createHexagon();
+        this.polygon = createHexagon();
 
 
     }
@@ -36,15 +35,11 @@ public class Hexagon extends JPanel {
         return polygon;
     }
 
-    public int getRadius() {
-        return radius;
-    }
-
-    public Point getCenter() {
+    Point getCenter() {
         return center;
     }
 
-    public Polygon getHexagon() {
-        return hexagon;
+    Polygon getPolygon() {
+        return polygon;
     }
 }
