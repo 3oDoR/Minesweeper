@@ -10,6 +10,7 @@ public class DeskTest {
     Desk desk = new Desk(3,3);
 
 
+
     @Test
     void getNeighbords() {
         assertEquals(desk.getNeighbords(0,0),2);

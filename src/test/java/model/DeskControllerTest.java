@@ -23,6 +23,7 @@ public class DeskControllerTest {
          assertEquals(deskController.remarked(0,0), DeskController.GameResult.NONE);
     }
 
+
     @Test
     void touch() {
             if (deskController.touch(0, 0) == DeskController.GameResult.NONE) {
