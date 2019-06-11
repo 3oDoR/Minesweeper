@@ -24,7 +24,7 @@ public class Game {
 
     }
 
-    public static void repaint(HexagonPanel hexagonPanel) {
+    static void repaint(HexagonPanel hexagonPanel) {
         hexagonPanel.repaint();
     }
 
@@ -52,8 +52,6 @@ public class Game {
             }
         }
 
-
-
         hexagonPanel.addMouseListener(new MinerListener(controller,topLevelContainer,hexagonPanel,desk));
 
         topLevelContainer.setLocationRelativeTo(null);
@@ -62,13 +60,12 @@ public class Game {
         JMenuBar menuBar = new JMenuBar();
         JMenu commands = new JMenu("Commands");
         JMenuItem quit = new JMenuItem("Quit");
+
         quit.addActionListener(e -> System.exit(0));
         commands.add(quit);
+
         menuBar.add(commands);
         topLevelContainer.setJMenuBar(menuBar);
-
-
-        topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         panel.add(hexagonPanel);
         panel.setBackground(new Color(100, 143, 110));

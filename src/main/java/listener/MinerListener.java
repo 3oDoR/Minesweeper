@@ -36,7 +36,7 @@ public class MinerListener implements MouseListener {
         DeskController.GameResult result = DeskController.GameResult.NONE;
 
         int x;
-        int y = 0;
+        int y;
 
         PointerInfo coordinate = MouseInfo.getPointerInfo();
         Point point = new Point(coordinate.getLocation());
@@ -45,7 +45,7 @@ public class MinerListener implements MouseListener {
         x = (int) point.getX();
         y = (int) point.getY();
 
-        for (Hexagon hexagon : hexagonPanel.getHexagon()) {
+        for (Hexagon hexagon : hexagonPanel.getHexagons()) {
             if (hexagon.createHexagon().contains(x, y)) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                    for (int i = 0; i < desk.getColumns(); i++) {
@@ -71,11 +71,11 @@ public class MinerListener implements MouseListener {
         int option = -1;
 
         if (result.equals(DeskController.GameResult.LOSE)) {
-            Game.repaint(hexagonPanel);
-            option = showOptionDialog(false);
+
+                option = showOptionDialog(false);
 
         } else if (result.equals(DeskController.GameResult.WIN)) {
-            Game.repaint(hexagonPanel);
+
             option = showOptionDialog(true);
         }
 

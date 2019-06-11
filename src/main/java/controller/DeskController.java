@@ -14,7 +14,7 @@ public class DeskController {
     private HexagonPanel hexagonPanel;
 
 
-    DeskController(Desk desk, HexagonPanel hexagonPanel) {
+    public DeskController(Desk desk, HexagonPanel hexagonPanel) {
         this.desk = desk;
         this.hexagonPanel = hexagonPanel;
         this.unHidden = 0;
@@ -23,20 +23,24 @@ public class DeskController {
     private void setMarked(final int x, final int y) {
 
         if (desk.getField(x, y).isHidden()) {
+
             desk.getField(x, y).setMarked(true);
+            marked++;
         }
 
-        marked++;
+
     }
 
     private void setUnmarked(final int x, final int y) {
 
         if (desk.getField(x, y).isHidden()) {
+
             desk.getField(x, y).setMarked(false);
+            marked--;
         }
 
 
-        marked--;
+
     }
 
     public GameResult remarked(final int x, final int y) {
@@ -44,11 +48,9 @@ public class DeskController {
 
         if (field.isMarked()) {
             setUnmarked(x, y);
-            Game.repaint(hexagonPanel);
             return GameResult.NONE;
         } else {
             setMarked(x, y);
-            Game.repaint(hexagonPanel);
         }
         return game(field);
     }
@@ -68,7 +70,6 @@ public class DeskController {
                 }
 
             }
-            Game.repaint(hexagonPanel);
         }
     }
 
@@ -86,18 +87,21 @@ public class DeskController {
 
     private GameResult game(final Field field) {
         if (field.isBomb() && !field.isMarked()) {
+            Game.repaint(hexagonPanel);
             return GameResult.LOSE;
         }
 
         if (unHidden + marked < desk.getCountOfElements()) {
+            Game.repaint(hexagonPanel);
             return GameResult.NONE;
 
         }
 
         if (marked == desk.getCountOfBombs() && marked + unHidden == desk.getCountOfElements()) {
+            Game.repaint(hexagonPanel);
             return GameResult.WIN;
         }
-
+        Game.repaint(hexagonPanel);
         return GameResult.NONE;
     }
 

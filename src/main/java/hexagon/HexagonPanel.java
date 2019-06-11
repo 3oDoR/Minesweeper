@@ -43,18 +43,6 @@ public class HexagonPanel extends JPanel {
                         g2d.drawPolygon(hex.getPolygon());
                     }
 
-
-
-                    if (!desk.getField(i, j).isHidden()
-                            && !desk.getField(i, j).isMarked()
-                            && desk.getField(i, j).isBomb()) {
-
-                        g2d.setColor(Color.RED);
-                        g2d.fillPolygon(desk.getField(i, j).getHexagon().getPolygon());
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawPolygon(desk.getField(i, j).getHexagon().getPolygon());
-                    }
-
                     if (!desk.getField(i, j).isHidden()
                             && !desk.getField(i, j).isMarked()
                             && !desk.getField(i, j).isBomb()) {
@@ -85,7 +73,7 @@ public class HexagonPanel extends JPanel {
 
 
 
-    public List<Hexagon> getHexagon() {
+    public List<Hexagon> getHexagons() {
         return hexagon;
     }
 }

@@ -23,7 +23,6 @@ public class Desk {
         countOfBombs = 0;
         int x = 100;
         int y = 100;
-        int e = 0;
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
@@ -31,12 +30,13 @@ public class Desk {
                 fields[i][j] = new Field(needBomb(), false, true,
                         0, new FieldAddres(j, i), new Hexagon(new Point(y, x), 26));
 
-                if (i % 2 == 0 && e == i && j == lines - 1) {
-                    e += 1;
+                if (i % 2 == 0 &&  j == lines - 1) {
+
                     x = 122;
                     y += 39;
-                } else if (i % 2 != 0 && e == i && j == lines - 1) {
-                    e += 1;
+
+                } else if (i % 2 != 0 && j == lines - 1) {
+
                     x = 100;
                     y += 39;
                 }
@@ -97,6 +97,7 @@ public class Desk {
             if (x + 1 < columns && y - 1 >= 0) {
                 result.add(new FieldAddres(x + 1, y - 1));
             }
+
         } else if (y % 2 == 0) {
 
             if (x - 1 >= 0 && y - 1 >= 0) {
@@ -129,6 +130,7 @@ public class Desk {
     public int getColumns() {
         return columns;
     }
+
 
     public int getCountOfElements() {
         return lines * columns;
