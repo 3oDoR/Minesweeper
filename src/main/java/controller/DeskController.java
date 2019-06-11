@@ -23,7 +23,6 @@ public class DeskController {
     private void setMarked(final int x, final int y) {
 
         if (desk.getField(x, y).isHidden()) {
-
             desk.getField(x, y).setMarked(true);
             marked++;
         }
@@ -34,7 +33,6 @@ public class DeskController {
     private void setUnmarked(final int x, final int y) {
 
         if (desk.getField(x, y).isHidden()) {
-
             desk.getField(x, y).setMarked(false);
             marked--;
         }
@@ -48,6 +46,7 @@ public class DeskController {
 
         if (field.isMarked()) {
             setUnmarked(x, y);
+            Game.repaint(hexagonPanel);
             return GameResult.NONE;
         } else {
             setMarked(x, y);
@@ -57,18 +56,16 @@ public class DeskController {
 
 
     private void openFreeSpace(final int x, final int y) {
-        Field field = desk.getField(x, y);
+        Field field = desk.getField(x , y);
 
         if (!field.isBomb() && field.isHidden() && !field.isMarked()) {
             field.setHidden(false);
-
             unHidden++;
 
-            for (FieldAddres fieldAddres : desk.getNeighbords(field.getFieldAddres())) {
-                if (desk.getField(fieldAddres).getCountOfBombs() == 0) {
+            for (FieldAddres fieldAddres: desk.getNeighbords(field.getFieldAddres())) {
+                if (desk.getField(fieldAddres).getCountOfBombs() == 0 ) {
                     openFreeSpace(fieldAddres.getX(), fieldAddres.getY());
                 }
-
             }
         }
     }
