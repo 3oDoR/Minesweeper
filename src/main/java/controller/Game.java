@@ -12,20 +12,18 @@ import java.util.ArrayList;
 public class Game {
     private int lines;
     private int columns;
+    private int size;
 
 
     public Game(int size) {
         this.lines = size;
         this.columns = size;
+        this.size = size;
     }
 
     public static void main(String[] args) {
         new Game(getSizeOfLine()).run();
 
-    }
-
-    static void repaint(HexagonPanel hexagonPanel) {
-        hexagonPanel.repaint();
     }
 
     public static int getSizeOfLine() {
@@ -38,7 +36,7 @@ public class Game {
     public final void run() {
         JFrame topLevelContainer = new JFrame("Miner 1.0");
         topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        topLevelContainer.setSize(new Dimension(800, 800));
+        topLevelContainer.setSize(new Dimension((size + 1) * 39, (size + 1) * 51 + 32));
         JPanel panel = new JPanel();
         Desk desk = new Desk(lines, columns);
         ArrayList<Hexagon> hexagons = new ArrayList<>();
@@ -57,15 +55,6 @@ public class Game {
         topLevelContainer.setLocationRelativeTo(null);
         topLevelContainer.setLayout(new BorderLayout());
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu commands = new JMenu("Commands");
-        JMenuItem quit = new JMenuItem("Quit");
-
-        quit.addActionListener(e -> System.exit(0));
-        commands.add(quit);
-
-        menuBar.add(commands);
-        topLevelContainer.setJMenuBar(menuBar);
 
         panel.add(hexagonPanel);
         panel.setBackground(new Color(100, 143, 110));
@@ -73,6 +62,8 @@ public class Game {
         topLevelContainer.setVisible(true);
 
     }
+
+
 }
 
 

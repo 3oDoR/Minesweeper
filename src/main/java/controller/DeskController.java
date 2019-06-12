@@ -36,9 +36,10 @@ public class DeskController {
             desk.getField(x, y).setMarked(false);
             marked--;
         }
+    }
 
-
-
+    private void repaint(HexagonPanel hexagonPanel) {
+        hexagonPanel.repaint();
     }
 
     public GameResult remarked(final int x, final int y) {
@@ -46,7 +47,7 @@ public class DeskController {
 
         if (field.isMarked()) {
             setUnmarked(x, y);
-            Game.repaint(hexagonPanel);
+            repaint(hexagonPanel);
             return GameResult.NONE;
         } else {
             setMarked(x, y);
@@ -63,7 +64,7 @@ public class DeskController {
             unHidden++;
 
             for (FieldAddres fieldAddres: desk.getNeighbords(field.getFieldAddres())) {
-                if (desk.getField(fieldAddres).getCountOfBombs() == 0 ) {
+                if (desk.getField(fieldAddres).getCountOfBombs() == 0) {
                     openFreeSpace(fieldAddres.getX(), fieldAddres.getY());
                 }
             }
@@ -84,21 +85,21 @@ public class DeskController {
 
     private GameResult game(final Field field) {
         if (field.isBomb() && !field.isMarked()) {
-            Game.repaint(hexagonPanel);
+            repaint(hexagonPanel);
             return GameResult.LOSE;
         }
 
         if (unHidden + marked < desk.getCountOfElements()) {
-            Game.repaint(hexagonPanel);
+            repaint(hexagonPanel);
             return GameResult.NONE;
 
         }
 
         if (marked == desk.getCountOfBombs() && marked + unHidden == desk.getCountOfElements()) {
-            Game.repaint(hexagonPanel);
+                repaint(hexagonPanel);
             return GameResult.WIN;
         }
-        Game.repaint(hexagonPanel);
+        repaint(hexagonPanel);
         return GameResult.NONE;
     }
 

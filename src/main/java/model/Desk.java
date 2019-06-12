@@ -10,6 +10,7 @@ public class Desk {
     private int columns;
     private Field[][] fields;
     private int countOfBombs;
+    private int bombsOnBoard;
 
     public Desk(final int lines, final int columns) {
         this.lines = lines;
@@ -21,8 +22,8 @@ public class Desk {
 
     private void init() {
         countOfBombs = 0;
-        int x = 100;
-        int y = 100;
+        int x = 10;
+        int y = 39;
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
@@ -32,12 +33,12 @@ public class Desk {
 
                 if (i % 2 == 0 &&  j == lines - 1) {
 
-                    x = 122;
+                    x = 32;
                     y += 39;
 
                 } else if (i % 2 != 0 && j == lines - 1) {
 
-                    x = 100;
+                    x = 10;
                     y += 39;
                 }
             }
@@ -47,11 +48,15 @@ public class Desk {
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
+                if (getField(i,j).isBomb()) {
+                    bombsOnBoard++;
+                }
                 for (FieldAddres fieldAddres : getNeighbords(j, i)) {
                     if (getField(fieldAddres).isBomb()) {
                         count++;
                     }
                 }
+
                 fields[i][j].setCountOfBombs(count);
 
                 count = 0;
@@ -131,12 +136,15 @@ public class Desk {
         return columns;
     }
 
-
     public int getCountOfElements() {
         return lines * columns;
     }
 
     public int getCountOfBombs() {
         return countOfBombs;
+    }
+
+    public int getBombsOnBoard() {
+        return bombsOnBoard;
     }
 }
