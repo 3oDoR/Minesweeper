@@ -40,12 +40,12 @@ public class HexagonPanel extends JPanel {
         g2d.drawString("Bombs: " + desk.getCountOfBombs(),width / 2 - 45,25);
 
 
-        for (Hexagon hex : hexagon) {
 
-            for (int i = 0; i < desk.getColumns(); i++) {
-                for (int j = 0; j < desk.getLines(); j++) {
+            for (int i = 0; i < desk.getLines(); i++) {
+                for (int j = 0; j < desk.getColumns(); j++) {
 
                     Field field = desk.getField(i, j);
+                    Hexagon hex = desk.getField(i, j).getHexagon();
                     Polygon polygon = desk.getField(i, j).getHexagon().getPolygon();
 
                     if (field.isHidden() && !field.isMarked()) {
@@ -61,9 +61,49 @@ public class HexagonPanel extends JPanel {
                         g2d.fillPolygon(polygon);
                         g2d.setColor(Color.BLACK);
                         g2d.drawPolygon(polygon);
-                        g2d.drawString(field.getCountOfBombs() + "",
-                                field.getHexagon().getCenter().x - 5,
-                                field.getHexagon().getCenter().y + 5);
+
+                            if (field.getCountOfBombs() == 1) {
+                                g2d.setColor(Color.BLUE);
+                                g2d.drawString(field.getCountOfBombs() + "",
+                                        field.getHexagon().getCenter().x - 5,
+                                        field.getHexagon().getCenter().y + 5);
+                            } else if  (field.getCountOfBombs() == 2) {
+                                g2d.setColor(Color.GREEN);
+                                g2d.drawString(field.getCountOfBombs() + "",
+                                        field.getHexagon().getCenter().x - 5,
+                                        field.getHexagon().getCenter().y + 5);
+                            } else if (field.getCountOfBombs() == 3) {
+                                g2d.setColor(Color.RED);
+                                g2d.drawString(field.getCountOfBombs() + "",
+                                        field.getHexagon().getCenter().x - 5,
+                                        field.getHexagon().getCenter().y + 5);
+                            } else if (field.getCountOfBombs() == 4) {
+                                Color color = new Color(0x00045F);
+                                g2d.setColor(color);
+                                g2d.drawString(field.getCountOfBombs() + "",
+                                        field.getHexagon().getCenter().x - 5,
+                                        field.getHexagon().getCenter().y + 5);
+                            } else if (field.getCountOfBombs() == 5) {
+                                Color color = new Color(0x350200);
+                                g2d.setColor(color);
+                                g2d.drawString(field.getCountOfBombs() + "",
+                                        field.getHexagon().getCenter().x - 5,
+                                        field.getHexagon().getCenter().y + 5);
+                            } else if (field.getCountOfBombs() == 6) {
+                            Color color = new Color(0xFF131A);
+                            g2d.setColor(color);
+                            g2d.drawString(field.getCountOfBombs() + "",
+                                    field.getHexagon().getCenter().x - 5,
+                                    field.getHexagon().getCenter().y + 5);
+                        }
+                    }
+
+                    if (field.isBombHit()) {
+
+                        g2d.setColor(Color.RED);
+                        g2d.fillPolygon(polygon);
+                        g2d.setColor(Color.BLACK);
+                        g2d.drawPolygon(polygon);
                     }
                      if (field.isHidden() && field.isMarked()) {
 
@@ -78,7 +118,6 @@ public class HexagonPanel extends JPanel {
                 }
             }
         }
-    }
 
 
 

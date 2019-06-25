@@ -14,18 +14,23 @@ public class Game {
     private int columns;
 
 
-    public Game(int size) {
-        this.lines = size;
-        this.columns = size;
+    public Game(int lines,int columns) {
+        this.lines = lines;
+        this.columns = columns;
     }
 
     public static void main(String[] args) {
-        new Game(getSizeOfLine()).run();
+        new Game(getSizeOfColumn(),getSizeOfLine()).run();
 
     }
 
-    public static int getSizeOfLine() {
+    public static int getSizeOfColumn() {
         String input = JOptionPane.showInputDialog(null, "Enter a desk size (columns): ");
+        return Integer.parseInt(input);
+    }
+
+    public static int getSizeOfLine() {
+        String input = JOptionPane.showInputDialog(null, "Enter a desk size (lines): ");
         return Integer.parseInt(input);
 
     }
@@ -34,7 +39,7 @@ public class Game {
     public final void run() {
         JFrame topLevelContainer = new JFrame("Miner 1.0");
         topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        topLevelContainer.setSize(new Dimension((columns + 1) * 39, (lines + 1) * 51 + 32));
+        topLevelContainer.setSize(new Dimension((lines + 1) * 39, (columns + 1) * 51 + 32));
         JPanel panel = new JPanel();
         Desk desk = new Desk(lines, columns);
         ArrayList<Hexagon> hexagons = new ArrayList<>();
@@ -49,6 +54,8 @@ public class Game {
         }
 
         hexagonPanel.addMouseListener(new MinerListener(controller,topLevelContainer,hexagonPanel,desk));
+
+
 
         topLevelContainer.setLocationRelativeTo(null);
         topLevelContainer.setLayout(new BorderLayout());

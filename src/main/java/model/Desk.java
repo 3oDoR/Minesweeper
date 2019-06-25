@@ -10,7 +10,6 @@ public class Desk {
     private int columns;
     private Field[][] fields;
     private int countOfBombs;
-    private int bombsOnBoard;
 
     public Desk(final int lines, final int columns) {
         this.lines = lines;
@@ -22,36 +21,34 @@ public class Desk {
 
     private void init() {
         countOfBombs = 0;
-        int x = 10;
-        int y = 39;
+        int y = 10;
+        int x = 39;
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-                x = x + 46;
-                fields[i][j] = new Field(needBomb(), false, true,
-                        0, new FieldAddres(j, i), new Hexagon(new Point(y, x), 26));
+                y = y + 45;
+                fields[i][j] = new Field(needBomb(),false, false, true,
+                        0, new FieldAddres(i, j), new Hexagon(new Point(x, y), 26));
 
-                if (i % 2 == 0 &&  j == lines - 1) {
+                if (i % 2 == 0 &&  j == columns - 1) {
 
-                    x = 32;
-                    y += 39;
+                    y = 32;
+                    x += 39;
 
-                } else if (i % 2 != 0 && j == lines - 1) {
+                } else if (i % 2 != 0 && j == columns - 1) {
 
-                    x = 10;
-                    y += 39;
+                    y = 10;
+                    x += 39;
                 }
             }
+
         }
 
         int count = 0;
 
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
-                if (getField(i,j).isBomb()) {
-                    bombsOnBoard++;
-                }
-                for (FieldAddres fieldAddres : getNeighbords(j, i)) {
+                for (FieldAddres fieldAddres : getNeighbords(i, j)) {
                     if (getField(fieldAddres).isBomb()) {
                         count++;
                     }
@@ -75,44 +72,41 @@ public class Desk {
     }
 
     FieldAddres[] getNeighbords(final int x, final int y) {
-        if (y >= lines && x >= columns && y < 0 && x < 0) {
-            return new FieldAddres[0];
-        }
 
         ArrayList<FieldAddres> result = new ArrayList<>();
 
-        if (y + 1 >= 0 && y + 1 < lines) {
+        if (x + 1 < lines) {
+            result.add(new FieldAddres(x + 1, y));
+        }
+        if (x - 1 >= 0) {
+            result.add(new FieldAddres(x - 1, y));
+        }
+        if (y + 1 < columns) {
             result.add(new FieldAddres(x, y + 1));
         }
         if (y - 1 >= 0) {
-            result.add(new FieldAddres(x, y - 1));
-        }
-        if (y >= 0 && x + 1 < columns) {
-            result.add(new FieldAddres(x + 1, y));
-        }
-        if (x - 1 >= 0 && y >= 0) {
-            result.add(new FieldAddres(x - 1, y));
+            result.add(new FieldAddres(x,y - 1));
         }
 
-        if (y % 2 != 0) {
+        if (x % 2 != 0) {
 
-            if (y + 1 >= 0 && y + 1 < lines && x + 1 < columns) {
+            if (x + 1 >= 0 && x + 1 < lines && y + 1 < columns) {
                 result.add(new FieldAddres(x + 1, y + 1));
             }
-            if (x + 1 < columns && y - 1 >= 0) {
-                result.add(new FieldAddres(x + 1, y - 1));
-            }
-
-        } else if (y % 2 == 0) {
-
-            if (x - 1 >= 0 && y - 1 >= 0) {
-                result.add(new FieldAddres(x - 1, y - 1));
-            }
-            if (x - 1 >= 0 && y + 1 >= 0 && y + 1 < lines) {
+            if (y + 1 < columns && x - 1 >= 0) {
                 result.add(new FieldAddres(x - 1, y + 1));
             }
+
+        } else if (x % 2 == 0) {
+
+            if (y - 1 >= 0 && x - 1 >= 0) {
+                result.add(new FieldAddres(x - 1, y - 1));
+            }
+            if (y - 1 >= 0 && x + 1 < lines) {
+                result.add(new FieldAddres(x + 1, y - 1));
+            }
         }
-        return result.toArray(new FieldAddres[result.size()]);
+        return result.toArray(new FieldAddres[0]);
     }
 
 
@@ -121,11 +115,11 @@ public class Desk {
     }
 
     public Field getField(final int x, final int y) {
-        return fields[y][x];
+        return fields[x][y];
     }
 
     public Field getField(final FieldAddres fieldAddres) {
-        return fields[fieldAddres.getY()][fieldAddres.getX()];
+        return fields[fieldAddres.getX()][fieldAddres.getY()];
     }
 
     public int getLines() {
@@ -144,7 +138,4 @@ public class Desk {
         return countOfBombs;
     }
 
-    public int getBombsOnBoard() {
-        return bombsOnBoard;
-    }
 }

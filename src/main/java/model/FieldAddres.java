@@ -4,7 +4,7 @@ public class FieldAddres {
     private int x;
     private int y;
 
-    public FieldAddres(int x, int y) {
+    FieldAddres(int x, int y) {
         this.x = x;
         this.y = y;
     }

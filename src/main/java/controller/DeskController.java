@@ -26,8 +26,6 @@ public class DeskController {
             desk.getField(x, y).setMarked(true);
             marked++;
         }
-
-
     }
 
     private void setUnmarked(final int x, final int y) {
@@ -82,6 +80,11 @@ public class DeskController {
         }
 
         final Field field = desk.getField(x, y);
+
+        if (field.isBomb()) {
+            field.setBombHit(true);
+            repaint(hexagonPanel);
+        }
 
         if (field.getCountOfBombs() != 0) {
             field.setHidden(false);

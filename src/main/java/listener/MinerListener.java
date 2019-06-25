@@ -48,8 +48,8 @@ public class MinerListener implements MouseListener {
         for (Hexagon hexagon : hexagonPanel.getHexagons()) {
             if (hexagon.createHexagon().contains(x, y)) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                   for (int i = 0; i < desk.getColumns(); i++) {
-                       for (int j = 0; j < desk.getLines(); j++) {
+                   for (int i = 0; i < desk.getLines(); i++) {
+                       for (int j = 0; j < desk.getColumns(); j++) {
                            if (desk.getField(i,j).getHexagon() == hexagon) {
                                result = controller.remarked(i,j);
                            }
@@ -57,8 +57,8 @@ public class MinerListener implements MouseListener {
                    }
                 }
                 else if (e.getButton() == MouseEvent.BUTTON1) {
-                    for (int i = 0; i < desk.getColumns(); i++) {
-                        for (int j = 0; j < desk.getLines(); j++) {
+                    for (int i = 0; i < desk.getLines(); i++) {
+                        for (int j = 0; j < desk.getColumns(); j++) {
                             if (desk.getField(i,j).getHexagon() == hexagon) {
                                 result = controller.touch(i,j);
                             }
@@ -82,7 +82,7 @@ public class MinerListener implements MouseListener {
         if (option == 0) {
             jFrame.dispose();
 
-            new Game(Game.getSizeOfLine()).run();
+            new Game(Game.getSizeOfColumn(),Game.getSizeOfLine()).run();
 
         } else if (option == 1) {
             jFrame.dispatchEvent(new WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING));

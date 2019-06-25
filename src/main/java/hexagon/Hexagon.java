@@ -31,7 +31,6 @@ public class Hexagon {
             polygon.addPoint(xval, yval);
         }
 
-
         return polygon;
     }
 
@@ -42,4 +41,7 @@ public class Hexagon {
     Polygon getPolygon() {
         return polygon;
     }
+
+
+
 }
