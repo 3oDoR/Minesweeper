@@ -63,8 +63,12 @@ public class DeskController {
             field.setHidden(false);
             unHidden++;
 
-            for (FieldAddres fieldAddres: desk.getNeighbords(field.getFieldAddres())) {
-                if (desk.getField(fieldAddres).getCountOfBombs() == 0) {
+            for (FieldAddres fieldAddres : desk.getNeighbords(field.getFieldAddres())) {
+                if (desk.getField(fieldAddres).getCountOfBombs() != 0 && desk.getField(fieldAddres).isHidden()) {
+                    desk.getField(fieldAddres).setHidden(false);
+                    unHidden++;
+                }
+                if (desk.getField(fieldAddres).getCountOfBombs() == 0 && desk.getField(fieldAddres).isHidden()) {
                     openFreeSpace(fieldAddres.getX(), fieldAddres.getY());
                 }
             }
@@ -79,7 +83,13 @@ public class DeskController {
 
         final Field field = desk.getField(x, y);
 
-        openFreeSpace(field.getFieldAddres().getX(), field.getFieldAddres().getY());
+        if (field.getCountOfBombs() != 0) {
+            field.setHidden(false);
+            unHidden++;
+        }
+        if (field.getCountOfBombs() == 0) {
+            openFreeSpace(field.getFieldAddres().getX(), field.getFieldAddres().getY());
+        }
         return game(field);
     }
 
@@ -96,7 +106,7 @@ public class DeskController {
         }
 
         if (marked == desk.getCountOfBombs() && marked + unHidden == desk.getCountOfElements()) {
-                repaint(hexagonPanel);
+            repaint(hexagonPanel);
             return GameResult.WIN;
         }
         repaint(hexagonPanel);

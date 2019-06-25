@@ -12,13 +12,11 @@ import java.util.ArrayList;
 public class Game {
     private int lines;
     private int columns;
-    private int size;
 
 
     public Game(int size) {
         this.lines = size;
         this.columns = size;
-        this.size = size;
     }
 
     public static void main(String[] args) {
@@ -36,7 +34,7 @@ public class Game {
     public final void run() {
         JFrame topLevelContainer = new JFrame("Miner 1.0");
         topLevelContainer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        topLevelContainer.setSize(new Dimension((size + 1) * 39, (size + 1) * 51 + 32));
+        topLevelContainer.setSize(new Dimension((columns + 1) * 39, (lines + 1) * 51 + 32));
         JPanel panel = new JPanel();
         Desk desk = new Desk(lines, columns);
         ArrayList<Hexagon> hexagons = new ArrayList<>();

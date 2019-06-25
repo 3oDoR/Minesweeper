@@ -32,7 +32,7 @@ public class HexagonPanel extends JPanel {
 
         Font font = new Font("Verdana", Font.PLAIN, 20);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(5));
+        g2d.setStroke(new BasicStroke(2));
         g2d.setFont(font);
         g2d.setColor(Color.BLACK);
         int width = (desk.getLines() + 1) * 39;

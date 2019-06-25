@@ -136,7 +136,7 @@ public class Desk {
         return columns;
     }
 
-    public int getCountOfElements() {
+    public int  getCountOfElements() {
         return lines * columns;
     }
 
