@@ -12,7 +12,8 @@ public class Field {
     private FieldAddres fieldAddres;
     private Hexagon hexagon;
 
-    Field(boolean isBomb,boolean bombHit, boolean isMarked, boolean isHidden, int countOfBombs, FieldAddres fieldAddres, Hexagon hexagon) {
+    Field(boolean isBomb, boolean bombHit, boolean isMarked, boolean isHidden,
+          int countOfBombs, FieldAddres fieldAddres, Hexagon hexagon) {
         this.isBomb = isBomb;
         this.bombHit = bombHit;
         this.isMarked = isMarked;

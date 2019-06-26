@@ -81,11 +81,6 @@ public class DeskController {
 
         final Field field = desk.getField(x, y);
 
-        if (field.isBomb()) {
-            field.setBombHit(true);
-            repaint(hexagonPanel);
-        }
-
         if (field.getCountOfBombs() != 0) {
             field.setHidden(false);
             unHidden++;
@@ -96,8 +91,19 @@ public class DeskController {
         return game(field);
     }
 
+    private void openBombs(){
+        for (int i = 0; i < desk.getLines(); i++) {
+            for (int j = 0; j < desk.getColumns(); j++) {
+                if (desk.getField(i,j).isBomb()) {
+                    desk.getField(i,j).setBombHit(true);
+                }
+            }
+        }
+    }
+
     private GameResult game(final Field field) {
         if (field.isBomb() && !field.isMarked()) {
+            openBombs();
             repaint(hexagonPanel);
             return GameResult.LOSE;
         }

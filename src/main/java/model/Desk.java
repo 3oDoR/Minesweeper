@@ -27,10 +27,10 @@ public class Desk {
         for (int i = 0; i < lines; i++) {
             for (int j = 0; j < columns; j++) {
                 y = y + 45;
-                fields[i][j] = new Field(needBomb(),false, false, true,
+                fields[i][j] = new Field(needBomb(), false, false, true,
                         0, new FieldAddres(i, j), new Hexagon(new Point(x, y), 26));
 
-                if (i % 2 == 0 &&  j == columns - 1) {
+                if (i % 2 == 0 && j == columns - 1) {
 
                     y = 32;
                     x += 39;
@@ -85,7 +85,7 @@ public class Desk {
             result.add(new FieldAddres(x, y + 1));
         }
         if (y - 1 >= 0) {
-            result.add(new FieldAddres(x,y - 1));
+            result.add(new FieldAddres(x, y - 1));
         }
 
         if (x % 2 != 0) {
@@ -130,7 +130,7 @@ public class Desk {
         return columns;
     }
 
-    public int  getCountOfElements() {
+    public int getCountOfElements() {
         return lines * columns;
     }
 

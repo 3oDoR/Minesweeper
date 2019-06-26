@@ -48,19 +48,18 @@ public class MinerListener implements MouseListener {
         for (Hexagon hexagon : hexagonPanel.getHexagons()) {
             if (hexagon.createHexagon().contains(x, y)) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                   for (int i = 0; i < desk.getLines(); i++) {
-                       for (int j = 0; j < desk.getColumns(); j++) {
-                           if (desk.getField(i,j).getHexagon() == hexagon) {
-                               result = controller.remarked(i,j);
-                           }
-                       }
-                   }
-                }
-                else if (e.getButton() == MouseEvent.BUTTON1) {
                     for (int i = 0; i < desk.getLines(); i++) {
                         for (int j = 0; j < desk.getColumns(); j++) {
-                            if (desk.getField(i,j).getHexagon() == hexagon) {
-                                result = controller.touch(i,j);
+                            if (desk.getField(i, j).getHexagon() == hexagon) {
+                                result = controller.remarked(i, j);
+                            }
+                        }
+                    }
+                } else if (e.getButton() == MouseEvent.BUTTON1) {
+                    for (int i = 0; i < desk.getLines(); i++) {
+                        for (int j = 0; j < desk.getColumns(); j++) {
+                            if (desk.getField(i, j).getHexagon() == hexagon) {
+                                result = controller.touch(i, j);
                             }
                         }
                     }
@@ -72,7 +71,7 @@ public class MinerListener implements MouseListener {
 
         if (result.equals(DeskController.GameResult.LOSE)) {
 
-                option = showOptionDialog(false);
+            option = showOptionDialog(false);
 
         } else if (result.equals(DeskController.GameResult.WIN)) {
 
@@ -82,7 +81,7 @@ public class MinerListener implements MouseListener {
         if (option == 0) {
             jFrame.dispose();
 
-            new Game(Game.getSizeOfColumn(),Game.getSizeOfLine()).run();
+            new Game(Game.getSizeOfColumn(), Game.getSizeOfLine()).run();
 
         } else if (option == 1) {
             jFrame.dispatchEvent(new WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING));

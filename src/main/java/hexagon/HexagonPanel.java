@@ -37,88 +37,84 @@ public class HexagonPanel extends JPanel {
         g2d.setColor(Color.BLACK);
         int width = (desk.getLines() + 1) * 39;
 
-        g2d.drawString("Bombs: " + desk.getCountOfBombs(),width / 2 - 45,25);
+        if (desk.getLines() > 1) {
+            g2d.drawString("Bombs: " + desk.getCountOfBombs(), width / 2 - 45, 25);
+        } else if (desk.getLines() == 1) {
+            g2d.drawString("B: " + desk.getCountOfBombs(), width / 2 - 20, 25);
+        }
 
 
+        for (int i = 0; i < desk.getLines(); i++) {
+            for (int j = 0; j < desk.getColumns(); j++) {
 
-            for (int i = 0; i < desk.getLines(); i++) {
-                for (int j = 0; j < desk.getColumns(); j++) {
 
-                    Field field = desk.getField(i, j);
-                    Hexagon hex = desk.getField(i, j).getHexagon();
-                    Polygon polygon = desk.getField(i, j).getHexagon().getPolygon();
+                Field field = desk.getField(i, j);
+                Hexagon hex = desk.getField(i, j).getHexagon();
+                Polygon polygon = desk.getField(i, j).getHexagon().getPolygon();
 
-                    if (field.isHidden() && !field.isMarked()) {
+                if (field.isHidden() && !field.isMarked()) {
 
-                        g2d.setColor(Color.GRAY);
-                        g2d.fillPolygon(hex.getPolygon());
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawPolygon(hex.getPolygon());
-                    }
-                    if (!field.isHidden() && !field.isMarked() && !field.isBomb()) {
+                    g2d.setColor(Color.GRAY);
+                    g2d.fillPolygon(hex.getPolygon());
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawPolygon(hex.getPolygon());
+                }
 
-                        g2d.setColor(Color.WHITE);
-                        g2d.fillPolygon(polygon);
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawPolygon(polygon);
+                if (!field.isHidden() && !field.isMarked() && !field.isBomb()) {
 
-                            if (field.getCountOfBombs() == 1) {
-                                g2d.setColor(Color.BLUE);
-                                g2d.drawString(field.getCountOfBombs() + "",
-                                        field.getHexagon().getCenter().x - 5,
-                                        field.getHexagon().getCenter().y + 5);
-                            } else if  (field.getCountOfBombs() == 2) {
-                                g2d.setColor(Color.GREEN);
-                                g2d.drawString(field.getCountOfBombs() + "",
-                                        field.getHexagon().getCenter().x - 5,
-                                        field.getHexagon().getCenter().y + 5);
-                            } else if (field.getCountOfBombs() == 3) {
-                                g2d.setColor(Color.RED);
-                                g2d.drawString(field.getCountOfBombs() + "",
-                                        field.getHexagon().getCenter().x - 5,
-                                        field.getHexagon().getCenter().y + 5);
-                            } else if (field.getCountOfBombs() == 4) {
-                                Color color = new Color(0x00045F);
-                                g2d.setColor(color);
-                                g2d.drawString(field.getCountOfBombs() + "",
-                                        field.getHexagon().getCenter().x - 5,
-                                        field.getHexagon().getCenter().y + 5);
-                            } else if (field.getCountOfBombs() == 5) {
-                                Color color = new Color(0x350200);
-                                g2d.setColor(color);
-                                g2d.drawString(field.getCountOfBombs() + "",
-                                        field.getHexagon().getCenter().x - 5,
-                                        field.getHexagon().getCenter().y + 5);
-                            } else if (field.getCountOfBombs() == 6) {
-                            Color color = new Color(0xFF131A);
-                            g2d.setColor(color);
-                            g2d.drawString(field.getCountOfBombs() + "",
-                                    field.getHexagon().getCenter().x - 5,
-                                    field.getHexagon().getCenter().y + 5);
-                        }
-                    }
+                    g2d.setColor(Color.WHITE);
+                    g2d.fillPolygon(polygon);
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawPolygon(polygon);
 
-                    if (field.isBombHit()) {
-
+                    if (field.getCountOfBombs() == 1) {
+                        g2d.setColor(Color.BLUE);
+                    } else if (field.getCountOfBombs() == 2) {
+                        g2d.setColor(Color.GREEN);
+                    } else if (field.getCountOfBombs() == 3) {
                         g2d.setColor(Color.RED);
-                        g2d.fillPolygon(polygon);
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawPolygon(polygon);
+                    } else if (field.getCountOfBombs() == 4) {
+                        g2d.setColor(new Color(0x00045F));
+                    } else if (field.getCountOfBombs() == 5) {
+                        g2d.setColor(new Color(0x350200));
+                    } else if (field.getCountOfBombs() == 6) {
+                        g2d.setColor(new Color(0xFF131A));
                     }
-                     if (field.isHidden() && field.isMarked()) {
+                    g2d.drawString(field.getCountOfBombs() + "",
+                            field.getHexagon().getCenter().x - 5,
+                            field.getHexagon().getCenter().y + 5);
+                }
 
-                        g2d.setColor(Color.LIGHT_GRAY);
-                        g2d.fillPolygon(polygon);
-                        g2d.setColor(Color.BLACK);
-                        g2d.drawPolygon(polygon);
-                        g2d.drawString("B",
-                                field.getHexagon().getCenter().x - 5,
-                                field.getHexagon().getCenter().y + 5);
-                    }
+                if (field.isHidden() && field.isMarked()) {
+
+                    g2d.setColor(Color.LIGHT_GRAY);
+                    g2d.fillPolygon(polygon);
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawPolygon(polygon);
+                    g2d.drawString("B",
+                            field.getHexagon().getCenter().x - 5,
+                            field.getHexagon().getCenter().y + 5);
+                }
+                if (field.isBombHit()) {
+
+                    g2d.setColor(Color.RED);
+                    g2d.fillPolygon(polygon);
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawPolygon(polygon);
+                }
+                if (field.isBombHit() && field.isMarked()) {
+
+                    g2d.setColor(Color.RED);
+                    g2d.fillPolygon(polygon);
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawPolygon(polygon);
+                    g2d.drawString("B",
+                            field.getHexagon().getCenter().x - 5,
+                            field.getHexagon().getCenter().y + 5);
                 }
             }
         }
-
+    }
 
 
     public List<Hexagon> getHexagons() {
